@@ -1,0 +1,15 @@
+export const controlPanelStyle = {
+  position: 'absolute',
+  right: '10px',
+  top: '10px',
+  backgroundColor: 'white',
+  borderRadius: '5px',
+  listStyle: 'none',
+  padding: '5px 10px',
+  margin: '0',
+  display: 'block',
+  border: 'solid 1px black',
+  maxWidth: 'calc(100% - 70px)',
+  maxHeight: 'calc(100% - 60px)',
+  overflow: 'auto',
+}
