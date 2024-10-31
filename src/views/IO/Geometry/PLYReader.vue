@@ -4,8 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from "vue";
-// Load the rendering pieces we want to use (for both WebGL and WebGPU)
+import { ref, onMounted } from "vue";
 import '@/vtk.js/Rendering/Profiles/Geometry';
 
 import vtkActor from '@/vtk.js/Rendering/Core/Actor';
@@ -40,9 +39,10 @@ function init() {
   renderWindow.render();
 }
 
-function handlePlyFile(file) {
+function handlePlyFile(file: Blob) {
   const fileReader = new FileReader();
   fileReader.onload = function onLoad() {
+    if (!(fileReader.result instanceof ArrayBuffer)) return;
     reader.parseAsArrayBuffer(fileReader.result);
     renderer.resetCamera();
     renderWindow.render();
@@ -66,10 +66,11 @@ const handleImgFile = (url: string) => {
 let myContainer: HTMLElement;
 let fileContainer: HTMLElement;
 
-const handleFile = (event: Event) => {
+const handleFile = (event: InputEvent) => {
   event.preventDefault();
   const dataTransfer = event.dataTransfer;
-  const files = event.target.files || dataTransfer.files;
+  const files = (event.target as HTMLInputElement).files || dataTransfer?.files;
+  if (!files) return;
   if (files.length === 1) {
     myContainer.removeChild(fileContainer);
     handlePlyFile(files[0]);
@@ -88,6 +89,7 @@ const handleFile = (event: Event) => {
         actor.removeAllTextures();
         var reader = new FileReader()
         reader.onload = function () {
+          if (typeof reader.result !== "string") return;
           handleImgFile(reader.result);
         }
         reader.readAsDataURL(file)

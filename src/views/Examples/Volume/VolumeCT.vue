@@ -18,7 +18,7 @@ import { setModelAction } from "@/utils/vtkUtils/view3DROI";
 
 // @ts-ignore
 
-const containerRef = ref(null);
+const containerRef = ref();
 
 function init() {
   const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
