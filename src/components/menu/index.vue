@@ -40,17 +40,8 @@ Object.values(menuList).forEach((item: any, idx: number) => {
 </script>
 
 <style scoped>
-.tac {
-  width: 100%;
-  height: 100%;
-}
-
 .el-menu {
   height: 100%;
-}
-
-:deep(.el-sub-menu__title) {
-  height: 30px;
 }
 
 .el-sub-menu .el-menu-item,
@@ -58,5 +49,17 @@ Object.values(menuList).forEach((item: any, idx: number) => {
   height: 30px;
   line-height: 30px;
   padding: 0 10px;
+}
+
+:deep(.el-sub-menu .el-sub-menu__title) {
+  height: 30px;
+}
+
+:deep(.el-menu .el-sub-menu__title) {
+  padding-left: 25px !important;
+}
+
+.el-menu .el-sub-menu .el-menu-item {
+  padding-left: 30px !important;
 }
 </style>

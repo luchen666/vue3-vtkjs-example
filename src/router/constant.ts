@@ -4,6 +4,12 @@ export const menuList = {
   IO: {
     Geometry: [
       {
+        menu: 'STLReader',
+        path: '/STLReader',
+        name: 'STLReader.vue',
+        component: () => import('@/views/IO/Geometry/STLReader.vue'),
+      },
+      {
         menu: 'PLYReader',
         path: '/PLYReader',
         name: 'PLYReader.vue',
@@ -41,6 +47,19 @@ export const menuList = {
         path: '/VolumeCT',
         name: 'VolumeCT.vue',
         component: () => import('@/views/Examples/Volume/VolumeCT.vue'),
+      },
+    ],
+  },
+  Interaction: {
+    Manipulators: [
+      {
+        menu: 'KeyboardCameraManipulator',
+        path: '/KeyboardCameraManipulator',
+        name: 'KeyboardCameraManipulator.vue',
+        component: () =>
+          import(
+            '@/views/Interaction/Manipulators/KeyboardCameraManipulator.vue'
+          ),
       },
     ],
   },
