@@ -1,5 +1,5 @@
 import { m as macro } from '../../macros2.js';
-import { h as hsv2rgb, i as isNan, I as floor, J as isInf, K as rgb2hsv, L as rgb2lab, M as lab2rgb } from '../../Common/Core/Math/index.js';
+import { h as hsv2rgb, i as isNan, K as floor, L as isInf, M as rgb2hsv, N as rgb2lab, O as lab2rgb } from '../../Common/Core/Math/index.js';
 import vtkScalarsToColors from '../../Common/Core/ScalarsToColors.js';
 import Constants from './ColorTransferFunction/Constants.js';
 

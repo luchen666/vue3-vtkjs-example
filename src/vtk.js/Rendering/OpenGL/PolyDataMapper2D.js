@@ -8,7 +8,7 @@ import { v as vtkPolyData2DVS } from './glsl/vtkPolyData2DVS.glsl.js';
 import vtkReplacementShaderMapper from './ReplacementShaderMapper.js';
 import vtkShaderProgram from './ShaderProgram.js';
 import vtkViewNode from '../SceneGraph/ViewNode.js';
-import { N as round } from '../../Common/Core/Math/index.js';
+import { P as round } from '../../Common/Core/Math/index.js';
 import { DisplayLocation } from '../Core/Property2D/Constants.js';
 import { registerOverride } from './ViewNodeFactory.js';
 

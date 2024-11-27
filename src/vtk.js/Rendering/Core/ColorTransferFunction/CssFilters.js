@@ -1,4 +1,4 @@
-import { G as identity, H as multiplyMatrix } from '../../../Common/Core/Math/index.js';
+import { I as identity, J as multiplyMatrix } from '../../../Common/Core/Math/index.js';
 
 /**
  * A helper file to transform RGBA points using CSS filters equivalent

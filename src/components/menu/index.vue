@@ -9,7 +9,7 @@
         <template #title>{{ key2 }}</template>
         <template v-for="(item3, idx3) in item2" :key="idx3">
           <el-menu-item v-if="item3 && item3.menu" :index="`${index}-${idx2}-${idx3}`">
-            <router-link :to="item3.path"> {{ item3.menu }} </router-link>
+            <router-link :to="item3.path" :title="item3.menu"> {{ item3.menu }} </router-link>
           </el-menu-item>
         </template>
       </el-sub-menu>

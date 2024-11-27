@@ -1,4 +1,4 @@
-import { s as subtract, w as multiplyScalar, k as add, B as areEquals } from '../../../Common/Core/Math/index.js';
+import { s as subtract, w as multiplyScalar, k as add, D as areEquals } from '../../../Common/Core/Math/index.js';
 
 function calculateTextPosition(model) {
   const vector = [0, 0, 0];

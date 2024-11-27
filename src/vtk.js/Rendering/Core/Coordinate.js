@@ -1,6 +1,6 @@
 import { m as macro } from '../../macros2.js';
 import Constants from './Coordinate/Constants.js';
-import { N as round, I as floor } from '../../Common/Core/Math/index.js';
+import { P as round, K as floor } from '../../Common/Core/Math/index.js';
 
 const {
   Coordinate

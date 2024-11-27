@@ -1,7 +1,7 @@
 import { m as macro } from '../../macros2.js';
 import vtkAbstractImageMapper from './AbstractImageMapper.js';
 import vtkImageMapper from './ImageMapper.js';
-import { F as createUninitializedBounds } from '../../Common/Core/Math/index.js';
+import { H as createUninitializedBounds } from '../../Common/Core/Math/index.js';
 import { intersectWithLineForPointPicking, intersectWithLineForCellPicking } from './AbstractImageMapper/helper.js';
 import CoincidentTopologyHelper from './Mapper/CoincidentTopologyHelper.js';
 

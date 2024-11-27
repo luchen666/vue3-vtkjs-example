@@ -3,7 +3,7 @@ import vtkAbstractMapper3D from './AbstractMapper3D.js';
 import vtkDataArray from '../../Common/Core/DataArray.js';
 import vtkImageData from '../../Common/DataModel/ImageData.js';
 import vtkLookupTable from '../../Common/Core/LookupTable.js';
-import { F as createUninitializedBounds, i as isNan } from '../../Common/Core/Math/index.js';
+import { H as createUninitializedBounds, i as isNan } from '../../Common/Core/Math/index.js';
 import vtkScalarsToColors from '../../Common/Core/ScalarsToColors/Constants.js';
 import CoincidentTopologyHelper from './Mapper/CoincidentTopologyHelper.js';
 import Constants from './Mapper/Constants.js';

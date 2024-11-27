@@ -1,7 +1,7 @@
 import { m as macro } from '../../macros2.js';
 import vtkMouseRangeManipulator from '../../Interaction/Manipulators/MouseRangeManipulator.js';
 import vtkViewProxy from './ViewProxy.js';
-import { j as cross, E as getMajorAxisIndex, r as radiansFromDegrees } from '../../Common/Core/Math/index.js';
+import { j as cross, G as getMajorAxisIndex, r as radiansFromDegrees } from '../../Common/Core/Math/index.js';
 import { mat4, vec3 } from 'gl-matrix';
 import vtkBoundingBox from '../../Common/DataModel/BoundingBox.js';
 

@@ -114,7 +114,10 @@ function vtkPointPicker(publicAPI, model) {
         }
       }
     }
-    model.pointId = minPtId;
+    if (minPtId > -1 && tMin < model.globalTMin) {
+      model.globalTMin = tMin;
+      model.pointId = minPtId;
+    }
     return tMin;
   };
 }

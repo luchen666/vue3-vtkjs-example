@@ -1,6 +1,6 @@
 import { m as macro } from '../../macros2.js';
 import vtkAbstractMapper3D from './AbstractMapper3D.js';
-import { F as createUninitializedBounds } from '../../Common/Core/Math/index.js';
+import { H as createUninitializedBounds } from '../../Common/Core/Math/index.js';
 
 // ----------------------------------------------------------------------------
 // vtkAbstractImageMapper methods

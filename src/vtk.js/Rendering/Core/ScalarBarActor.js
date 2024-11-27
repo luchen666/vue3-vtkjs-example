@@ -1,5 +1,5 @@
 import * as d3 from 'd3-scale';
-import { P as nearestPowerOfTwo } from '../../Common/Core/Math/index.js';
+import { R as nearestPowerOfTwo } from '../../Common/Core/Math/index.js';
 import { m as macro } from '../../macros2.js';
 import vtkActor from './Actor.js';
 import vtkDataArray from '../../Common/Core/DataArray.js';

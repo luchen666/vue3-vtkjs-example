@@ -1,5 +1,5 @@
 import { m as macro } from '../../macros2.js';
-import { D as arrayRange } from '../../Common/Core/Math/index.js';
+import { F as arrayRange } from '../../Common/Core/Math/index.js';
 import WebworkerPromise from 'webworker-promise';
 import { W as WorkerFactory } from '../../_virtual/rollup-plugin-worker-loader__module_Sources/Interaction/Widgets/PiecewiseGaussianWidget/ComputeHistogram.worker.js';
 

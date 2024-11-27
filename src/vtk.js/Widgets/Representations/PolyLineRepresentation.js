@@ -1,7 +1,7 @@
 import { m as macro } from '../../macros2.js';
 import vtkActor from '../../Rendering/Core/Actor.js';
 import vtkMapper from '../../Rendering/Core/Mapper.js';
-import { B as areEquals } from '../../Common/Core/Math/index.js';
+import { D as areEquals } from '../../Common/Core/Math/index.js';
 import vtkBoundingBox from '../../Common/DataModel/BoundingBox.js';
 import vtkTubeFilter from '../../Filters/General/TubeFilter.js';
 import { getPixelWorldHeightAtCoord } from '../Core/WidgetManager.js';

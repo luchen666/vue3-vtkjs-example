@@ -1,5 +1,5 @@
 import { m as macro } from '../../macros2.js';
-import { F as createUninitializedBounds, C as clampValue, I as floor } from '../../Common/Core/Math/index.js';
+import { H as createUninitializedBounds, E as clampValue, K as floor } from '../../Common/Core/Math/index.js';
 import Constants from './VolumeMapper/Constants.js';
 import vtkAbstractMapper3D from './AbstractMapper3D.js';
 import vtkPiecewiseFunction from '../../Common/DataModel/PiecewiseFunction.js';

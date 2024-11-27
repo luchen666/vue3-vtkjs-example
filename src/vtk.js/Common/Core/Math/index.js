@@ -53,6 +53,15 @@ function createArray() {
   return res;
 }
 const Pi = () => Math.PI;
+function ldexp(x, exponent) {
+  if (exponent > 1023) {
+    return x * 2 ** 1023 * 2 ** (exponent - 1023);
+  }
+  if (exponent < -1074) {
+    return x * 2 ** -1074 * 2 ** (exponent + 1074);
+  }
+  return x * 2 ** exponent;
+}
 function radiansFromDegrees(deg) {
   return deg / 180 * Math.PI;
 }
@@ -2012,6 +2021,7 @@ function float2CssRGBA(rgbArray) {
 
 var vtkMath = {
   Pi,
+  ldexp,
   radiansFromDegrees,
   degreesFromRadians,
   round,
@@ -2128,6 +2138,7 @@ var vtkMath$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
   createArray: createArray,
   Pi: Pi,
+  ldexp: ldexp,
   radiansFromDegrees: radiansFromDegrees,
   degreesFromRadians: degreesFromRadians,
   round: round,
@@ -2245,4 +2256,4 @@ var vtkMath$1 = /*#__PURE__*/Object.freeze({
   'default': vtkMath
 });
 
-export { arrayMin as $, degreesFromRadians as A, areEquals as B, clampValue as C, arrayRange as D, getMajorAxisIndex as E, createUninitializedBounds as F, identity as G, multiplyMatrix as H, floor as I, isInf as J, rgb2hsv as K, rgb2lab as L, lab2rgb as M, round as N, normalize2D as O, nearestPowerOfTwo as P, multiply3x3_vect3 as Q, getSparseOrthogonalMatrix as R, areBoundsInitialized as S, isPowerOfTwo as T, angleBetweenVectors as U, signedAngleBetweenVectors as V, createArray as W, Pi as X, ceil as Y, min as Z, max as _, areMatricesEqual as a, float2CssRGBA as a$, arrayMax as a0, ceilLog2 as a1, factorial as a2, binomial as a3, beginCombination as a4, nextCombination as a5, randomSeed as a6, getSeed as a7, gaussian as a8, multiplyScalar2D as a9, diagonalize3x3 as aA, singularValueDecomposition3x3 as aB, luFactorLinearSystem as aC, luSolveLinearSystem as aD, invertMatrix as aE, estimateMatrixCondition as aF, solveHomogeneousLeastSquares as aG, solveLeastSquares as aH, hex2float as aI, lab2xyz as aJ, xyz2lab as aK, xyz2rgb as aL, rgb2xyz as aM, computeBoundsFromPoints as aN, clampAndNormalizeValue as aO, getScalarTypeFittingRange as aP, getAdjustedScalarRange as aQ, extentIsWithinOtherExtent as aR, boundsIsWithinOtherBounds as aS, pointIsWithinBounds as aT, solve3PointCircle as aU, inf as aV, negInf as aW, isFinite as aX, isNaN as aY, floatToHex2 as aZ, floatRGB2HexCode as a_, multiplyAccumulate2D as aa, outer as ab, projectVector as ac, dot2D as ad, projectVector2D as ae, gaussianAmplitude as af, gaussianWeight as ag, outer2D as ah, norm2D as ai, rowsToMat4 as aj, columnsToMat4 as ak, columnsToMat3 as al, LUFactor3x3 as am, LUSolve3x3 as an, linearSolve3x3 as ao, multiply3x3_mat3 as ap, transpose3x3 as aq, invert3x3 as ar, identity3x3 as as, isIdentity as at, isIdentity3x3 as au, quaternionToMatrix3x3 as av, roundNumber as aw, matrix3x3ToQuaternion as ax, multiplyQuaternion as ay, orthogonalize3x3 as az, roundVector as b, clampVector as c, dot as d, distance2BetweenPoints as e, vtkMath as f, solveLinearSystem as g, hsv2rgb as h, isNan as i, cross as j, add as k, normalize as l, multiplyAccumulate as m, norm as n, determinant2x2 as o, jacobiN as p, perpendiculars as q, radiansFromDegrees as r, subtract as s, jacobi as t, uninitializeBounds as u, vtkMath$1 as v, multiplyScalar as w, random as x, determinant3x3 as y, rowsToMat3 as z };
+export { min as $, degreesFromRadians as A, ldexp as B, xyz2rgb as C, areEquals as D, clampValue as E, arrayRange as F, getMajorAxisIndex as G, createUninitializedBounds as H, identity as I, multiplyMatrix as J, floor as K, isInf as L, rgb2hsv as M, rgb2lab as N, lab2rgb as O, round as P, normalize2D as Q, nearestPowerOfTwo as R, multiply3x3_vect3 as S, getSparseOrthogonalMatrix as T, areBoundsInitialized as U, isPowerOfTwo as V, angleBetweenVectors as W, signedAngleBetweenVectors as X, createArray as Y, Pi as Z, ceil as _, areMatricesEqual as a, floatRGB2HexCode as a$, max as a0, arrayMin as a1, arrayMax as a2, ceilLog2 as a3, factorial as a4, binomial as a5, beginCombination as a6, nextCombination as a7, randomSeed as a8, getSeed as a9, multiplyQuaternion as aA, orthogonalize3x3 as aB, diagonalize3x3 as aC, singularValueDecomposition3x3 as aD, luFactorLinearSystem as aE, luSolveLinearSystem as aF, invertMatrix as aG, estimateMatrixCondition as aH, solveHomogeneousLeastSquares as aI, solveLeastSquares as aJ, hex2float as aK, lab2xyz as aL, xyz2lab as aM, rgb2xyz as aN, computeBoundsFromPoints as aO, clampAndNormalizeValue as aP, getScalarTypeFittingRange as aQ, getAdjustedScalarRange as aR, extentIsWithinOtherExtent as aS, boundsIsWithinOtherBounds as aT, pointIsWithinBounds as aU, solve3PointCircle as aV, inf as aW, negInf as aX, isFinite as aY, isNaN as aZ, floatToHex2 as a_, gaussian as aa, multiplyScalar2D as ab, multiplyAccumulate2D as ac, outer as ad, projectVector as ae, dot2D as af, projectVector2D as ag, gaussianAmplitude as ah, gaussianWeight as ai, outer2D as aj, norm2D as ak, rowsToMat4 as al, columnsToMat4 as am, columnsToMat3 as an, LUFactor3x3 as ao, LUSolve3x3 as ap, linearSolve3x3 as aq, multiply3x3_mat3 as ar, transpose3x3 as as, invert3x3 as at, identity3x3 as au, isIdentity as av, isIdentity3x3 as aw, quaternionToMatrix3x3 as ax, roundNumber as ay, matrix3x3ToQuaternion as az, roundVector as b, float2CssRGBA as b0, clampVector as c, dot as d, distance2BetweenPoints as e, vtkMath as f, solveLinearSystem as g, hsv2rgb as h, isNan as i, cross as j, add as k, normalize as l, multiplyAccumulate as m, norm as n, determinant2x2 as o, jacobiN as p, perpendiculars as q, radiansFromDegrees as r, subtract as s, jacobi as t, uninitializeBounds as u, vtkMath$1 as v, multiplyScalar as w, random as x, determinant3x3 as y, rowsToMat3 as z };

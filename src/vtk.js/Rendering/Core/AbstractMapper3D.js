@@ -1,7 +1,7 @@
 import { m as macro } from '../../macros2.js';
 import vtkAbstractMapper from './AbstractMapper.js';
 import vtkBoundingBox from '../../Common/DataModel/BoundingBox.js';
-import { F as createUninitializedBounds } from '../../Common/Core/Math/index.js';
+import { H as createUninitializedBounds } from '../../Common/Core/Math/index.js';
 
 // ----------------------------------------------------------------------------
 // vtkAbstractMapper methods

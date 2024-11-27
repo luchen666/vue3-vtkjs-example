@@ -7,6 +7,7 @@ import vtkMTLReader from './Misc/MTLReader.js';
 import vtkOBJReader from './Misc/OBJReader.js';
 import vtkPDBReader from './Misc/PDBReader.js';
 import vtkSkyboxReader from './Misc/SkyboxReader.js';
+import vtkGCodeReader from './Misc/GCodeReader.js';
 
 var Misc = {
   vtkElevationReader,
@@ -17,7 +18,8 @@ var Misc = {
   vtkMTLReader,
   vtkOBJReader,
   vtkPDBReader,
-  vtkSkyboxReader
+  vtkSkyboxReader,
+  vtkGCodeReader
 };
 
 export { Misc as default };

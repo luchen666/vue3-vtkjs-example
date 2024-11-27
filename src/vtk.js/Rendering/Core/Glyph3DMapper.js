@@ -2,7 +2,7 @@ import { mat4, vec3, mat3 } from 'gl-matrix';
 import Constants from './Glyph3DMapper/Constants.js';
 import { m as macro } from '../../macros2.js';
 import vtkMapper from './Mapper.js';
-import { F as createUninitializedBounds, n as norm } from '../../Common/Core/Math/index.js';
+import { H as createUninitializedBounds, n as norm } from '../../Common/Core/Math/index.js';
 import vtkBoundingBox from '../../Common/DataModel/BoundingBox.js';
 
 const {

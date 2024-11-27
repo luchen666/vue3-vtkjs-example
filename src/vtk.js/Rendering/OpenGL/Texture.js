@@ -2,7 +2,7 @@ import Constants from './Texture/Constants.js';
 import HalfFloat from '../../Common/Core/HalfFloat.js';
 import { n as newInstance$1, o as obj, s as set, e as setGet, g as get, i as moveToProtected, a as newTypedArray, c as macro } from '../../macros2.js';
 import vtkDataArray from '../../Common/Core/DataArray.js';
-import { T as isPowerOfTwo, P as nearestPowerOfTwo } from '../../Common/Core/Math/index.js';
+import { V as isPowerOfTwo, R as nearestPowerOfTwo } from '../../Common/Core/Math/index.js';
 import vtkViewNode from '../SceneGraph/ViewNode.js';
 import { registerOverride } from './ViewNodeFactory.js';
 

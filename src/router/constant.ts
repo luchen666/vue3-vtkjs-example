@@ -1,6 +1,17 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-export const menuList = {
+type MenuType = {
+  [key: string]: {
+    [key: string]: {
+      menu: string
+      path: string
+      name: string
+      component: () => Promise<any>
+    }[]
+  }
+}
+
+export const menuList: MenuType = {
   IO: {
     Geometry: [
       {
@@ -20,6 +31,12 @@ export const menuList = {
         path: '/DRCReader',
         name: 'DRCReader.vue',
         component: () => import('@/views/IO/Geometry/DRCReader.vue'),
+      },
+      {
+        menu: 'GLTFImporter',
+        path: '/GLTFImporter',
+        name: 'GLTFImporter.vue',
+        component: () => import('@/views/IO/Geometry/GLTFImporter.vue'),
       },
     ],
   },

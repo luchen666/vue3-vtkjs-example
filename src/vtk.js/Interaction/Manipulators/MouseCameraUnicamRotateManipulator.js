@@ -8,7 +8,7 @@ import vtkSphereSource from '../../Filters/Sources/SphereSource.js';
 import { FieldAssociations } from '../../Common/DataModel/DataSet/Constants.js';
 import { mat4, vec3 } from 'gl-matrix';
 import { m as macro } from '../../macros2.js';
-import { B as areEquals, l as normalize, d as dot, C as clampValue, s as subtract, j as cross, w as multiplyScalar, e as distance2BetweenPoints } from '../../Common/Core/Math/index.js';
+import { D as areEquals, l as normalize, d as dot, E as clampValue, s as subtract, j as cross, w as multiplyScalar, e as distance2BetweenPoints } from '../../Common/Core/Math/index.js';
 
 const {
   States
