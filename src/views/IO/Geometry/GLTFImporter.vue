@@ -4,24 +4,20 @@
 </template>
 
 <script setup lang="ts">
+// @ts-nocheck
 import { ref, onMounted } from "vue";
+import { onBeforeRouteLeave } from 'vue-router'
 import '@kitware/vtk.js/Rendering/Profiles/Geometry';
-
-// Enable data soure for DataAccessHelper
-import '@kitware/vtk.js/IO/Core/DataAccessHelper/LiteHttpDataAccessHelper'; // Just need HTTP
-// import '@kitware/vtk.js/IO/Core/DataAccessHelper/HttpDataAccessHelper'; // HTTP + zip
-// import '@kitware/vtk.js/IO/Core/DataAccessHelper/HtmlDataAccessHelper'; // html + base64 + zip
-// import '@kitware/vtk.js/IO/Core/DataAccessHelper/JSZipDataAccessHelper'; // zip
+import '@kitware/vtk.js/IO/Core/DataAccessHelper/LiteHttpDataAccessHelper';
 
 import vtkFullScreenRenderWindow from '@kitware/vtk.js/Rendering/Misc/FullScreenRenderWindow';
 import vtkTexture from '@kitware/vtk.js/Rendering/Core/Texture';
 import vtkURLExtract from '@kitware/vtk.js/Common/Core/URLExtract';
 import vtkResourceLoader from '@kitware/vtk.js/IO/Core/ResourceLoader';
-
 import vtkGLTFImporter from '@kitware/vtk.js/IO/Geometry/GLTFImporter';
+import { controlPanelStyle } from '@/components/controlPanel/controlPanelStyle';
 
 import controlPanel, { loadSvg } from '@/components/controlPanel/GLTFImporter';
-
 import { modelsJson } from '@/testData/model-index';
 
 let mixer;
@@ -30,8 +26,10 @@ let selectedFlavor;
 const userParms: any = vtkURLExtract.extractURLParameters();
 const selectedScene = userParms.scene || 0;
 const viewAPI = userParms.viewAPI || 'WebGL';
-
 const modelsDictionary = {};
+
+const baseUrl = 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main';
+// const baseUrl = '${window.location.origin}/data/pbr/GLTFImporter';
 
 function createTextureWithMipmap(src: string, level: number) {
   const img = new Image();
@@ -47,15 +45,12 @@ function createTextureWithMipmap(src: string, level: number) {
   return tex;
 }
 
-
-
-
 const containerRef = ref();
-
+let fullScreenRenderer: vtkFullScreenRenderWindow | null = null;
 function init() {
-
-  const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
+  fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
     container: containerRef.value,
+    controlPanelStyle
   });
   fullScreenRenderer.addController(controlPanel);
 
@@ -105,7 +100,6 @@ function init() {
   // add a loading svg to the container and remove once the reader is ready
   const loading = document.createElement('div');
   loading.innerHTML = loadSvg;
-  // loading message should center in the window
   loading.style.position = 'absolute';
   loading.style.left = '50%';
   loading.style.top = '50%';
@@ -123,8 +117,6 @@ function init() {
   }
 
   function ready() {
-    console.log('Ready');
-    // remove loading message
     loading.remove();
 
     reader.importActors();
@@ -188,10 +180,7 @@ function init() {
     }
   }
 
-  console.log(modelsJson, 'modelsJson');
-
   const modelsFolder = 'Models';
-
   modelsJson.forEach((entry) => {
     if (entry.variants !== undefined && entry.name !== undefined) {
       const variants = [];
@@ -230,10 +219,7 @@ function init() {
     flavorSelector.appendChild(option);
   });
 
-  const baseUrl = 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main';
-  // const baseUrl = '${window.location.origin}/data/pbr/GLTFImporter';
   const url = `${baseUrl}/${modelsDictionary[selectedModel][selectedFlavor]}`;
-
   if (selectedFlavor === 'glTF-Draco') {
     const dracoUrl = 'https://unpkg.com/draco3dgltf@1.3.6/draco_decoder_gltf_nodejs.js';
     vtkResourceLoader
@@ -317,6 +303,11 @@ function init() {
 onMounted(() => {
   init();
 });
+
+onBeforeRouteLeave(() => {
+  fullScreenRenderer && fullScreenRenderer.removeController()
+})
+
 
 </script>
 <style scoped>

@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { onBeforeRouteLeave } from 'vue-router'
+import { onBeforeRouteLeave } from 'vue-router';
 
 // Load the rendering pieces we want to use (for both WebGL and WebGPU)
 import '@/vtk.js/Rendering/Profiles/Volume';
