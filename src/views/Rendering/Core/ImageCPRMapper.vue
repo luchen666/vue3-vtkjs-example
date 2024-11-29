@@ -4,11 +4,11 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, reactive, nextTick } from "vue";
-import '@/vtk.js/Rendering/Profiles/All';
+import { onBeforeRouteLeave } from 'vue-router';
 
+import '@/vtk.js/Rendering/Profiles/All';
 // Force the loading of HttpDataAccessHelper to support gzip decompression
 import '@/vtk.js/IO/Core/DataAccessHelper/HttpDataAccessHelper';
-
 import { ProjectionMode } from '@/vtk.js/Rendering/Core/ImageCPRMapper/Constants';
 import { radiansFromDegrees } from '@/vtk.js/Common/Core/Math';
 import { updateState } from '@/vtk.js/Widgets/Widgets3D/ResliceCursorWidget/helpers';
@@ -38,24 +38,25 @@ import { getImageData2 } from "@/utils/covertImageData.js";
 import imageData from "@/testData/buffer3D.json";
 
 const containerRef = ref();
+let fullScreenRenderer: vtkFullScreenRenderWindow | null = null;
 
-const volumePath = `${window.location.origin}/data/volume/LIDC2.vti`;
+const volumePath = `/data/volume/LIDC2.vti`;
 const centerlineJsons = { Aorta: aortaJSON, Spine: spineJSON };
 const centerlineKeys = Object.keys(centerlineJsons);
 
 onMounted(async () => {
   await nextTick();
-  const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
+  fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
     container: containerRef.value,
     controlPanelStyle
   });
   const stretchRenderer = fullScreenRenderer.getRenderer();
   const renderWindow = fullScreenRenderer.getRenderWindow();
-
   fullScreenRenderer.addController(controlPanel);
+
   const angleEl = document.getElementById('angle') as HTMLElement;
   const animateEl = document.getElementById('animate') as HTMLElement;
-  const centerlineEl = document.getElementById('centerline') as HTMLElement;
+  const centerlineEl = document.getElementById('centerline') as HTMLInputElement;
   const modeEl = document.getElementById('mode') as HTMLElement;
   const projectionModeEl = document.getElementById('projectionMode') as HTMLElement;
   const projectionThicknessEl = document.getElementById('projectionThickness') as HTMLElement;
@@ -315,7 +316,7 @@ onMounted(async () => {
       widget.setImage(image);
       const imageDimensions = image.getDimensions();
       const imageSpacing = image.getSpacing();
-      const diagonal = vec3.mul([], imageDimensions, imageSpacing);
+      const diagonal = vec3.mul([0, 0, 0], imageDimensions, imageSpacing);
       mapper.setWidth(2 * vec3.len(diagonal));
 
       actor.setUserMatrix(widget.getResliceAxes(stretchViewType));
@@ -448,4 +449,8 @@ onMounted(async () => {
   stretchViewWidgetInstance.onInteractionEvent(updateDistanceAndDirection);
   crossViewWidgetInstance.onInteractionEvent(updateDistanceAndDirection);
 });
+
+onBeforeRouteLeave(() => {
+  fullScreenRenderer && fullScreenRenderer.removeController()
+})
 </script>

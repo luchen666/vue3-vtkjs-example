@@ -1,4 +1,9 @@
 import type { RouteRecordRaw } from 'vue-router'
+import { Filters } from './classApi/Filters'
+import { IO } from './classApi/IO'
+import { Rendering } from './classApi/Rendering'
+import { Interaction } from './classApi/Interaction'
+import { Examples } from './classApi/Examples'
 
 type MenuType = {
   [key: string]: {
@@ -12,109 +17,16 @@ type MenuType = {
 }
 
 export const menuList: MenuType = {
-  IO: {
-    Geometry: [
-      {
-        menu: 'STLReader',
-        path: '/STLReader',
-        name: 'STLReader.vue',
-        component: () => import('@/views/IO/Geometry/STLReader.vue'),
-      },
-      {
-        menu: 'PLYReader',
-        path: '/PLYReader',
-        name: 'PLYReader.vue',
-        component: () => import('@/views/IO/Geometry/PLYReader.vue'),
-      },
-      {
-        menu: 'DRCReader',
-        path: '/DRCReader',
-        name: 'DRCReader.vue',
-        component: () => import('@/views/IO/Geometry/DRCReader.vue'),
-      },
-      {
-        menu: 'GLTFImporter',
-        path: '/GLTFImporter',
-        name: 'GLTFImporter.vue',
-        component: () => import('@/views/IO/Geometry/GLTFImporter.vue'),
-      },
-    ],
-  },
-  Rendering: {
-    Core: [
-      {
-        menu: 'CellPicker',
-        path: '/CellPicker',
-        name: 'CellPicker.vue',
-        component: () => import('@/views/Rendering/Core/CellPicker.vue'),
-      },
-      {
-        menu: 'Glyph3DMapper',
-        path: '/Glyph3DMapper',
-        name: 'Glyph3DMapper.vue',
-        component: () => import('@/views/Rendering/Core/Glyph3DMapper.vue'),
-      },
-      {
-        menu: 'HardwareSelector',
-        path: '/HardwareSelector',
-        name: 'HardwareSelector.vue',
-        component: () => import('@/views/Rendering/Core/HardwareSelector.vue'),
-      },
-      {
-        menu: 'ImageCPRMapper',
-        path: '/ImageCPRMapper',
-        name: 'ImageCPRMapper.vue',
-        component: () => import('@/views/Rendering/Core/ImageCPRMapper.vue'),
-      },
-      {
-        menu: 'ScalarBarActor',
-        path: '/ScalarBarActor',
-        name: 'ScalarBarActor.vue',
-        component: () => import('@/views/Rendering/Core/ScalarBarActor.vue'),
-      },
-      {
-        menu: 'PointPicker',
-        path: '/PointPicker',
-        name: 'PointPicker.vue',
-        component: () => import('@/views/Rendering/Core/PointPicker.vue'),
-      },
-    ],
-  },
-  Examples: {
-    Volume: [
-      {
-        menu: 'MultiSliceImageMapper',
-        path: '/MultiSliceImageMapper',
-        name: 'MultiSliceImageMapper.vue',
-        component: () =>
-          import('@/views/Examples/Volume/MultiSliceImageMapper.vue'),
-      },
-      {
-        menu: 'VolumeCT',
-        path: '/VolumeCT',
-        name: 'VolumeCT.vue',
-        component: () => import('@/views/Examples/Volume/VolumeCT.vue'),
-      },
-    ],
-  },
-  Interaction: {
-    Manipulators: [
-      {
-        menu: 'KeyboardCameraManipulator',
-        path: '/KeyboardCameraManipulator',
-        name: 'KeyboardCameraManipulator.vue',
-        component: () =>
-          import(
-            '@/views/Interaction/Manipulators/KeyboardCameraManipulator.vue'
-          ),
-      },
-    ],
-  },
+  Filters,
+  IO,
+  Rendering,
+  Examples,
+  Interaction,
 }
 
 const routeList: RouteRecordRaw[] = []
 Object.values(menuList).forEach(prop => {
-  const list = Object.values(prop)[0]
+  const list = Object.values(prop).flat(1)
   routeList.push(...Object.values(list))
 })
 
