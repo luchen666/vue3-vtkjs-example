@@ -16,6 +16,7 @@ function openAsyncXHR(method, url) {
   let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   const xhr = new XMLHttpRequest();
   xhr.open(method, url, true);
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   if (options.headers) {
     Object.entries(options.headers).forEach(_ref => {
       let [key, value] = _ref;

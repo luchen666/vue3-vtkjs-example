@@ -1,4 +1,5 @@
 <template>
+  <button style="position: absolute;top: 20px;right: 40px;z-index: 1;" @click="rotateFn">click</button>
   <div ref="containerRef" style="width: 100%; height: 100%"></div>
 </template>
 
@@ -15,17 +16,21 @@ import vtkMapper from '@kitware/vtk.js/Rendering/Core/Mapper';
 
 import controlPanel from '@/components/controlPanel/ArrowSource';
 import { controlPanelLeftStyle } from '@/components/controlPanel/controlPanelStyle';
+import vtkMatrixBuilder from "@kitware/vtk.js/Common/Core/MatrixBuilder";
 
 const containerRef = ref();
 let fullScreenRenderer: vtkFullScreenRenderWindow | null = null;
+let renderer: any;
+let renderWindow: any;
+let pipelines: any[] = [];
 
 onMounted(async () => {
   fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
     container: containerRef.value,
     controlPanelStyle: controlPanelLeftStyle
   });
-  const renderer = fullScreenRenderer.getRenderer();
-  const renderWindow = fullScreenRenderer.getRenderWindow();
+  renderer = fullScreenRenderer.getRenderer();
+  renderWindow = fullScreenRenderer.getRenderWindow();
   fullScreenRenderer.addController(controlPanel);
 
   function createArrowPipeline() {
@@ -43,7 +48,7 @@ onMounted(async () => {
     return { arrowSource, mapper, actor };
   }
 
-  const pipelines = [createArrowPipeline()];
+  pipelines = [createArrowPipeline()];
 
   renderer.resetCamera();
   renderer.resetCameraClippingRange();
@@ -52,8 +57,6 @@ onMounted(async () => {
   // -----------------------------------------------------------
   // UI control handling
   // -----------------------------------------------------------
-
-  fullScreenRenderer.addController(controlPanel);
 
   [
     'tipResolution',
@@ -132,6 +135,41 @@ onMounted(async () => {
   const resetButton = document.querySelector('.reset');
   resetButton.addEventListener('click', resetUI);
 });
+
+const rotateFn = () => {
+  const arrawActor = renderer.getActors()[0];
+  // 设置箭头的方向
+  const direction = [0.3, 0.4, 0.3];
+  const position = [10, 8, 6];
+
+  // 计算箭头的旋转矩阵，平移到 position 的位置
+  let matrix = vtkMatrixBuilder
+    .buildFromDegree()
+    // .translate(position[0], position[1], position[2])
+    .rotateFromDirections([1, 0, 0], direction)
+    .getMatrix();
+
+  //   // 设置箭头的位置
+  // arrawActor.setPosition(position);
+
+  // 应用旋转矩阵到箭头
+  arrawActor.setUserMatrix(matrix)
+  
+  // 渲染场景
+  renderer.resetCamera();
+  renderWindow.render();
+}
+
+
+// const angle0 = Math.atan2(direction[1], direction[0]);
+// const angle1 = Math.acos(direction[2]);
+// const angle2 = Math.atan2(direction[0], direction[1]);
+
+// console.log(angle0, angle1, angle2)
+
+// const arrawActor = renderer.getActors()[0];
+// // 旋转箭头
+// arrawActor.setOrientation(angle0 * (180 / Math.PI), angle1 * (180 / Math.PI), angle2 * (180 / Math.PI));
 
 onBeforeRouteLeave(() => {
   fullScreenRenderer && fullScreenRenderer.removeController()

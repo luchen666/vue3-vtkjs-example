@@ -4,6 +4,8 @@ import { IO } from './classApi/IO'
 import { Rendering } from './classApi/Rendering'
 import { Interaction } from './classApi/Interaction'
 import { Examples } from './classApi/Examples'
+import { VtkVsThree } from './classApi/VtkVsThree'
+import { Widgets } from './classApi/Widgets'
 
 type MenuType = {
   [key: string]: {
@@ -17,11 +19,13 @@ type MenuType = {
 }
 
 export const menuList: MenuType = {
+  VtkVsThree,
   Filters,
   IO,
   Rendering,
   Examples,
   Interaction,
+  Widgets
 }
 
 const routeList: RouteRecordRaw[] = []

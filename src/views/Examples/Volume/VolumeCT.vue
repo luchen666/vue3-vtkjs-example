@@ -15,6 +15,10 @@ import vtkImageCropFilter from "@/vtk.js/Filters/General/ImageCropFilter";
 import { getImageData2 } from "@/utils/covertImageData";
 import imageData from "@/testData/buffer3D.json";
 import { setModelAction } from "@/utils/vtkUtils/view3DROI";
+import vtkWidgetManager from "@kitware/vtk.js/Widgets/Core/WidgetManager";
+import vtkPolyLineWidget from '@kitware/vtk.js/Widgets/Widgets3D/PolyLineWidget';
+import { comManipulator } from "@/utils/vtkUtils/ComManipulator";
+import vtkInteractorStyleManipulator from "@kitware/vtk.js/Interaction/Style/InteractorStyleManipulator";
 
 // @ts-ignore
 
@@ -42,13 +46,16 @@ function init() {
   mapper.setInputConnection(cropFilter.getOutputPort());
   renderer.addVolume(actor);
 
-
   const activeCamera = renderer.getActiveCamera();
   activeCamera.setFocalPoint(0, 0, 0);
   activeCamera.setPosition(0, -1, 0);
   activeCamera.setViewUp(0, 0, 1);
   renderer.resetCamera(actor.getBounds());
   renderer.getActiveCamera().setParallelProjection(true);
+
+  const interactorStyle = vtkInteractorStyleManipulator.newInstance();
+  renderWindow.getInteractor().setInteractorStyle(interactorStyle);
+  comManipulator.addMouseManipulator(interactorStyle);
 
   renderer.resetCamera();
 
@@ -57,6 +64,20 @@ function init() {
   // 保证xyz 轴线能正常显示
   fullScreenRenderer.getInteractor().render();
   renderWindow.render();
+
+  actor.setPickable(true);
+
+  const widgetManager = vtkWidgetManager.newInstance()
+  widgetManager.setRenderer(renderer)
+
+  const widget = vtkPolyLineWidget.newInstance()
+  widget.placeWidget(cropFilter.getOutputData().getBounds())
+
+  widgetManager.addWidget(widget)
+
+  renderer.resetCamera()
+  widgetManager.enablePicking()
+  widgetManager.grabFocus(widget)
 }
 
 onMounted(() => {

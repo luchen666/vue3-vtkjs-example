@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 5280",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "node --max_old_space_size=1024000 ./node_modules/vite/bin/vite.js build",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
@@ -23,6 +23,7 @@
     "pinia": "^2.2.4",
     "seedrandom": "3.0.5",
     "spark-md5": "3.0.2",
+    "three": "^0.171.0",
     "vue": "^3.5.11",
     "vue-router": "^4.4.5"
   },
@@ -44,8 +45,9 @@
     "npm-run-all2": "^6.2.3",
     "prettier": "^3.3.3",
     "typescript": "~5.5.4",
-    "vite": "^5.4.8",
+    "vite": "^6.0.1",
     "vitest": "^2.1.2",
-    "vue-tsc": "^2.1.6"
+    "vue-tsc": "^2.1.6",
+    "snabbdom": "^3.5.1"
   }
 }

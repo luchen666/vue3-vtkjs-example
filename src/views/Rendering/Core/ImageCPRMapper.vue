@@ -35,12 +35,13 @@ import aortaJSON from '@/testData/aorta_centerline.json';
 import spineJSON from '@/testData/spine_centerline.json';
 import { controlPanelStyle } from '@/components/controlPanel/controlPanelStyle';
 import { getImageData2 } from "@/utils/covertImageData.js";
-import imageData from "@/testData/buffer3D.json";
+import imageData from "@/testData/imageData.json";
 
 const containerRef = ref();
 let fullScreenRenderer: vtkFullScreenRenderWindow | null = null;
 
-const volumePath = `/data/volume/LIDC2.vti`;
+const volumePath = `https://github.com/luchen666/vue3-vtkjs-example/tree/main/public/data/volume/LIDC2.vti`;
+// const volumePath = `${window.location.origin}/data/volume/LIDC2.vti`;
 const centerlineJsons = { Aorta: aortaJSON, Spine: spineJSON };
 const centerlineKeys = Object.keys(centerlineJsons);
 
@@ -308,30 +309,30 @@ onMounted(async () => {
   );
 
 
-  reader.setUrl(volumePath).then(() => {
-    window.imageData = reader.getOutputData();
-    reader.loadData().then(() => {
-      const image = reader.getOutputData();
-      // const image = getImageData2(imageData);
-      widget.setImage(image);
-      const imageDimensions = image.getDimensions();
-      const imageSpacing = image.getSpacing();
-      const diagonal = vec3.mul([0, 0, 0], imageDimensions, imageSpacing);
-      mapper.setWidth(2 * vec3.len(diagonal));
+  reader.setUrl(volumePath).then(async () => {
+    await reader.loadData()
+    const image = reader.getOutputData();
+    // const image = getImageData2(imageData);
+    // window.image = image;
 
-      actor.setUserMatrix(widget.getResliceAxes(stretchViewType));
-      stretchRenderer.addVolume(actor);
-      widget.updateCameraPoints(stretchRenderer, stretchViewType, true, true);
+    widget.setImage(image);
+    const imageDimensions = image.getDimensions();
+    const imageSpacing = image.getSpacing();
+    const diagonal = vec3.mul([0, 0, 0], imageDimensions, imageSpacing);
+    mapper.setWidth(2 * vec3.len(diagonal));
 
-      reslice.setInputData(image);
-      crossRenderer.addActor(resliceActor);
-      widget.updateReslicePlane(reslice, crossViewType);
-      resliceActor.setUserMatrix(reslice.getResliceAxes());
-      widget.updateCameraPoints(crossRenderer, crossViewType, true, true);
+    actor.setUserMatrix(widget.getResliceAxes(stretchViewType));
+    stretchRenderer.addVolume(actor);
+    widget.updateCameraPoints(stretchRenderer, stretchViewType, true, true);
 
-      currentImage = image;
-      setCenterlineKey(currentCenterlineKey);
-    })
+    reslice.setInputData(image);
+    crossRenderer.addActor(resliceActor);
+    widget.updateReslicePlane(reslice, crossViewType);
+    resliceActor.setUserMatrix(reslice.getResliceAxes());
+    widget.updateCameraPoints(crossRenderer, crossViewType, true, true);
+
+    currentImage = image;
+    setCenterlineKey(currentCenterlineKey);
   })
 
   function setAngleFromSlider(radAngle) {

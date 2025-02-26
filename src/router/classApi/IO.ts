@@ -9,7 +9,6 @@ export const IO = {
     {
       menu: 'PLYReader',
       path: '/PLYReader',
-      name: 'PLYReader.vue',
       component: () => import('@/views/IO/Geometry/PLYReader.vue'),
     },
     {

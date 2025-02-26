@@ -6,8 +6,8 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'PLYReader.vue',
-      component: () => import('@/views/IO/Geometry/PLYReader.vue'),
+      name: 'home',
+      component: () => import('@/views/home.vue'),
     },
     ...routeList,
   ],

@@ -20,84 +20,91 @@ export const Examples = {
     //   path: '/AR',
     //   name: 'AR.vue',
     //   component: () =>
-    //     import('@/views/Examples/Volume/AR.vue'),
+    //     import('@/views/Examples/Geometry/AR.vue'),
     // },
     // {
     //   menu: 'AxesActor',
     //   path: '/AxesActor',
     //   name: 'AxesActor.vue',
     //   component: () =>
-    //     import('@/views/Examples/Volume/AxesActor.vue'),
+    //     import('@/views/Examples/Geometry/AxesActor.vue'),
     // },
     // {
     //   menu: 'Cone',
     //   path: '/Cone',
     //   name: 'Cone.vue',
     //   component: () =>
-    //     import('@/views/Examples/Volume/Cone.vue'),
+    //     import('@/views/Examples/Geometry/Cone.vue'),
     // },
     // {
     //   menu: 'CubeAxes',
     //   path: '/CubeAxes',
     //   name: 'CubeAxes.vue',
     //   component: () =>
-    //     import('@/views/Examples/Volume/CubeAxes.vue'),
+    //     import('@/views/Examples/Geometry/CubeAxes.vue'),
     // },
-    // {
-    //   menu: 'DepthTest',
-    //   path: '/DepthTest',
-    //   name: 'DepthTest.vue',
-    //   component: () =>
-    //     import('@/views/Examples/Volume/DepthTest.vue'),
-    // },
+    {
+      menu: 'DepthTest',
+      path: '/DepthTest',
+      name: 'DepthTest.vue',
+      component: () =>
+        import('@/views/Examples/Geometry/DepthTest.vue'),
+    },
     // {
     //   menu: 'GlyphRotation',
     //   path: '/GlyphRotation',
     //   name: 'GlyphRotation.vue',
     //   component: () =>
-    //     import('@/views/Examples/Volume/GlyphRotation.vue'),
+    //     import('@/views/Examples/Geometry/GlyphRotation.vue'),
     // },
     // {
     //   menu: 'ItkWasmGeometry',
     //   path: '/ItkWasmGeometry',
     //   name: 'ItkWasmGeometry.vue',
     //   component: () =>
-    //     import('@/views/Examples/Volume/ItkWasmGeometry.vue'),
+    //     import('@/views/Examples/Geometry/ItkWasmGeometry.vue'),
     // },
     // {
     //   menu: 'LookingGlass',
     //   path: '/LookingGlass',
     //   name: 'LookingGlass.vue',
     //   component: () =>
-    //     import('@/views/Examples/Volume/LookingGlass.vue'),
+    //     import('@/views/Examples/Geometry/LookingGlass.vue'),
     // },
     // {
     //   menu: 'Picking',
     //   path: '/Picking',
     //   name: 'Picking.vue',
     //   component: () =>
-    //     import('@/views/Examples/Volume/Picking.vue'),
+    //     import('@/views/Examples/Geometry/Picking.vue'),
     // },
     // {
     //   menu: 'SimpleCone',
     //   path: '/SimpleCone',
     //   name: 'SimpleCone.vue',
     //   component: () =>
-    //     import('@/views/Examples/Volume/SimpleCone.vue'),
+    //     import('@/views/Examples/Geometry/SimpleCone.vue'),
     // },
-    // {
-    //   menu: 'SpheresAndLabels',
-    //   path: '/SpheresAndLabels',
-    //   name: 'SpheresAndLabels.vue',
-    //   component: () =>
-    //     import('@/views/Examples/Volume/SpheresAndLabels.vue'),
-    // },
+    {
+      menu: 'SpheresAndLabels',
+      path: '/SpheresAndLabels',
+      name: 'SpheresAndLabels.vue',
+      component: () =>
+        import('@/views/Examples/Geometry/SpheresAndLabels.vue'),
+    },
     // {
     //   menu: 'Texture',
     //   path: '/Texture',
     //   name: 'Texture.vue',
     //   component: () =>
-    //     import('@/views/Examples/Volume/Texture.vue'),
+    //     import('@/views/Examples/Geometry/Texture.vue'),
     // },
+    {
+      menu: 'DepthDrcAndLabel',
+      path: '/DepthDrcAndLabel',
+      name: 'DepthDrcAndLabel.vue',
+      component: () =>
+        import('@/views/Examples/Geometry/DepthDrcAndLabel.vue'),
+    },
   ],
 }
