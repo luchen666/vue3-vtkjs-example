@@ -6,6 +6,7 @@ import { Interaction } from './classApi/Interaction'
 import { Examples } from './classApi/Examples'
 import { VtkVsThree } from './classApi/VtkVsThree'
 import { Widgets } from './classApi/Widgets'
+import { Snabbdom } from './classApi/snabbdom'
 
 type MenuType = {
   [key: string]: {
@@ -19,6 +20,7 @@ type MenuType = {
 }
 
 export const menuList: MenuType = {
+  Snabbdom,
   VtkVsThree,
   Filters,
   IO,

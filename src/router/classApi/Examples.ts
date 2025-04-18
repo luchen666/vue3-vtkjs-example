@@ -13,6 +13,12 @@ export const Examples = {
       name: 'VolumeCT.vue',
       component: () => import('@/views/Examples/Volume/VolumeCT.vue'),
     },
+    {
+      menu: 'VolumeRenderingWithPolyData',
+      path: '/VolumeRenderingWithPolyData',
+      name: 'VolumeRenderingWithPolyData.vue',
+      component: () => import('@/views/Examples/Volume/VolumeRenderingWithPolyData.vue'),
+    },
   ],
   Geometry: [
     // {
