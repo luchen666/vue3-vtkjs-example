@@ -113,4 +113,13 @@ export const Examples = {
         import('@/views/Examples/Geometry/DepthDrcAndLabel.vue'),
     },
   ],
+  Test: [
+    {
+      menu: 'Panorama',
+      path: '/Panorama',
+      name: 'Panorama.vue',
+      component: () =>
+        import('@/views/Examples/Test/Panorama.vue'),
+    },
+  ],
 }

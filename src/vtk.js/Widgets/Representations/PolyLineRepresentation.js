@@ -87,6 +87,10 @@ function vtkPolyLineRepresentation(publicAPI, model) {
   vtkWidgetRepresentation.connectPipeline(model._pipelines.tubes);
   publicAPI.addActor(model._pipelines.tubes.actor);
 
+  console.log(model._pipelines.tubes.actor, "model._pipelines.tubes.actor");
+  model._pipelines.tubes.actor.getProperty().setColor(0,1,0);
+  
+
   // --------------------------------------------------------------------------
   publicAPI.requestData = (inData, outData) => {
     const state = inData[0];

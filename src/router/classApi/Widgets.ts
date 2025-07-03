@@ -32,5 +32,26 @@ export const Widgets = {
       component: () =>
         import('@/views/Widgets/Widgets3D/PolyLineWidget.vue'),
     },
+    {
+      menu: 'LabelWidget',
+      path: '/LabelWidget',
+      name: 'LabelWidget.vue',
+      component: () =>
+        import('@/views/Widgets/Widgets3D/LabelWidget.vue'),
+    },
+    {
+      menu: 'ResliceCursorWidget',
+      path: '/ResliceCursorWidget',
+      name: 'ResliceCursorWidget.vue',
+      component: () =>
+        import('@/views/Widgets/Widgets3D/ResliceCursorWidget.vue'),
+    },
+    {
+      menu: 'dotLineWidget',
+      path: '/dotLineWidget',
+      name: 'dotLineWidget.vue',
+      component: () =>
+        import('@/views/Widgets/Widgets3D/dotLineWidget/index.vue'),
+    },
   ],
 }

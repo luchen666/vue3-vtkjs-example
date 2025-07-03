@@ -112,10 +112,10 @@ export function bindSVGRepresentation(
     const repData = mapState(state, {
       size: view.getSize(),
     })
-    const rendered = render(repData, h);
-     const {nodes, labels} = rendered;
-    
-    const htmlDom = h('div', [
+    const rendered = render(repData, h)
+    const { nodes, labels } = rendered
+
+    return h('div', [
       h(
         'svg',
         {
@@ -130,10 +130,9 @@ export function bindSVGRepresentation(
           attrs: getSize(),
           style: svgStyle,
         },
-        Array.isArray(labels)? labels : [labels],
+        Array.isArray(labels) ? labels : [labels],
       ),
     ])
-    return htmlDom;
   }
 
   const dummy = mountDummySVGContainer(canvas)
@@ -190,8 +189,8 @@ export function bindSVGRepresentation(
  */
 function applyDefaultInteractions(userListeners) {
   let locked = false
-  console.log(userListeners, "userListeners");
-  
+  console.log(userListeners, 'userListeners')
+
   return {
     ...userListeners,
     pointerdown(ev) {
