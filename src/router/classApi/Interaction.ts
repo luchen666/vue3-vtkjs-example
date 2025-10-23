@@ -10,4 +10,15 @@ export const Interaction = {
         ),
     },
   ],
+  Style: [
+    {
+      menu: 'InteractorStyleManipulator',
+      path: '/InteractorStyleManipulator',
+      name: 'InteractorStyleManipulator.vue',
+      component: () =>
+        import(
+          '@/views/Interaction/Style/InteractorStyleManipulator.vue'
+        ),
+    },
+  ],
 }

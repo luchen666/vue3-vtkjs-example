@@ -25,7 +25,10 @@ import vtkWidgetManager from '@kitware/vtk.js/Widgets/Core/WidgetManager'
 import vtkPolyLineWidget from '@kitware/vtk.js/Widgets/Widgets3D/PolyLineWidget'
 import { comManipulator } from '@/utils/vtkUtils/ComManipulator'
 import vtkInteractorStyleManipulator from '@kitware/vtk.js/Interaction/Style/InteractorStyleManipulator'
-import { addPoints, addPulpMeasure } from '@/components/vtk/pulpMeasure3D/pulpSvg'
+import {
+  addPoints,
+  addPulpMeasure,
+} from '@/components/vtk/pulpMeasure3D/pulpSvg'
 import vtkCellPicker from '@kitware/vtk.js/Rendering/Core/CellPicker'
 import { addActor, clipBounds, drcReader } from '@/utils/vtkUtils/drcReader'
 
@@ -38,7 +41,7 @@ async function init() {
     container: containerRef.value,
   })
   const renderer = fullScreenRenderer.getRenderer()
-  const renderWindow = fullScreenRenderer.getRenderWindow()
+  const renderWindow = fullScreenRenderer.getRenderWindow() // getApiSpecificRenderWindow
 
   const actor = vtkVolume.newInstance()
   const mapper = vtkVolumeMapper.newInstance()
@@ -51,12 +54,11 @@ async function init() {
 
   const data = getImageData2(imageData)
 
-  const extent = data.getExtent();
-  cropFilter.setCroppingPlanes(...extent);
+  const extent = data.getExtent()
+  cropFilter.setCroppingPlanes(...extent)
 
   cropFilter.setInputData(data)
   mapper.setInputConnection(cropFilter.getOutputPort())
-
 
   renderer.addVolume(actor)
 
@@ -64,26 +66,12 @@ async function init() {
   renderWindow.getInteractor().setInteractorStyle(interactorStyle)
   comManipulator.addMouseManipulator(interactorStyle)
 
+  console.log(imageData,data.getCenter(), "imageData")
+  // 设置旋转中心点
+  const center = data.getCenter()
+  interactorStyle.setCenterOfRotation(center[0], center[1], center[2]);
+
   actor.setPickable(false)
-
-  // 保证xyz 轴线能正常显示
-  fullScreenRenderer.getInteractor().render()
-  renderWindow.render()
-
-  // await addActor(renderer, "/data/draco/ytys/11.drc");
-  const ysqActor = await addActor(renderer, '/data/draco/ytys/11_1.drc', 0.1)
-  const ybzActor = await addActor(renderer, '/data/draco/ytys/11_2.drc', 0.5)
-
-  
-  // actor.getProperty().setOpacity(opacity)
-  window.actor = actor;
-  window.ybzActor = ybzActor;
-  window.renderWindow = renderWindow;
-
-  
-  // await addActor(renderer, "/data/draco/ytys/11_3.drc");
-  const bounds = ybzActor.getBounds()
-  // clipBounds(bounds, { renderer, mapper })
 
   const activeCamera = renderer.getActiveCamera()
   activeCamera.setParallelProjection(true)
@@ -94,39 +82,50 @@ async function init() {
   renderer.resetCameraClippingRange()
   renderer.resetCamera(actor.getBounds())
 
-  activeCamera.setParallelScale(20)
+  // activeCamera.setParallelScale(20)
   renderWindow.render()
 
-  const widgetManager = vtkWidgetManager.newInstance()
-  widgetManager.setRenderer(renderer)
+  // // await addActor(renderer, "/data/draco/ytys/11.drc");
+  // const ysqActor = await addActor(renderer, '/data/draco/ytys/11_1.drc', 0.1)
+  // const ybzActor = await addActor(renderer, '/data/draco/ytys/11_2.drc', 0.5)
 
-  view = {
-    renderer,
-    bounds,
-    widgetManager,
-  }
+  // // actor.getProperty().setOpacity(opacity)
+  // window.actor = actor;
+  // window.ybzActor = ybzActor;
+  // window.renderWindow = renderWindow;
 
-  view.ysqPicker = vtkCellPicker.newInstance({ opacityThreshold: 0.0001 })
-  view.ysqPicker.setPickFromList(1)
-  view.ysqPicker.setTolerance(0)
-  view.ysqPicker.initializePickList()
-  view.ysqPicker.addPickList(ysqActor)
+  // // await addActor(renderer, "/data/draco/ytys/11_3.drc");
+  // const bounds = ybzActor.getBounds()
+  // // clipBounds(bounds, { renderer, mapper })
+  // renderWindow.render()
+
+  // const widgetManager = vtkWidgetManager.newInstance()
+  // widgetManager.setRenderer(renderer)
+
+  // view = {
+  //   renderer,
+  //   bounds,
+  //   widgetManager,
+  // }
+
+  // view.ysqPicker = vtkCellPicker.newInstance({ opacityThreshold: 0.0001 })
+  // view.ysqPicker.setPickFromList(1)
+  // view.ysqPicker.setTolerance(0)
+  // view.ysqPicker.initializePickList()
+  // view.ysqPicker.addPickList(ysqActor)
   // view.ysqPicker.addPickList(ybzActor);
 
-  addPoints(view);
+  // addPoints(view);
 }
 
 const addMeasure = () => {
-  const widget = vtkPolyLineWidget.newInstance()
-  widget.placeWidget(view.bounds)
-
-  view.widgetManager.addWidget(widget)
-
-  view.renderer.resetCamera(view.bounds)
-  view.widgetManager.enablePicking()
-  view.widgetManager.grabFocus(widget)
-
-  addPulpMeasure(view)
+  // const widget = vtkPolyLineWidget.newInstance()
+  // widget.placeWidget(view.bounds)
+  // view.widgetManager.addWidget(widget)
+  // view.renderer.resetCamera(view.bounds)
+  // view.widgetManager.enablePicking()
+  // view.widgetManager.grabFocus(widget)
+  // addPulpMeasure(view)
 }
 
 onMounted(() => {

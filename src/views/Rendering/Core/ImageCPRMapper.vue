@@ -40,8 +40,8 @@ import imageData from "@/testData/imageData.json";
 const containerRef = ref();
 let fullScreenRenderer: vtkFullScreenRenderWindow | null = null;
 
-const volumePath = `https://github.com/luchen666/vue3-vtkjs-example/tree/main/public/data/volume/LIDC2.vti`;
-// const volumePath = `${window.location.origin}/data/volume/LIDC2.vti`;
+// const volumePath = `https://kitware.github.io/vtk-js/data/volume/LIDC2.vti`;
+const volumePath = `${window.location.origin}/data/volume/LIDC2.vti`;
 const centerlineJsons = { Aorta: aortaJSON, Spine: spineJSON };
 const centerlineKeys = Object.keys(centerlineJsons);
 

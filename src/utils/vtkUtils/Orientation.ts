@@ -33,7 +33,7 @@ export const createOrientation = async (
   orientationWidget.setEnabled(true);
   const Corners = vtkOrientationMarkerWidget.Corners as { [key: string]: any };
   orientationWidget.setViewportCorner(Corners[aspect]);
-  console.log(orientationWidget);
+  // console.log(orientationWidget);
 
   return orientationWidget;
 };

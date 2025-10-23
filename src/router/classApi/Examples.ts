@@ -113,13 +113,45 @@ export const Examples = {
         import('@/views/Examples/Geometry/DepthDrcAndLabel.vue'),
     },
   ],
+  Rendering: [
+    {
+      menu: 'ManyRenderWindows',
+      path: '/ManyRenderWindows',
+      name: 'ManyRenderWindows.vue',
+      component: () =>
+        import('@/views/Examples/Rendering/ManyRenderWindows.vue'),
+    },
+    {
+      menu: 'QuadView',
+      path: '/QuadView',
+      name: 'QuadView.vue',
+      component: () =>
+        import('@/views/Examples/Rendering/QuadView.vue'),
+    },
+  ],
   Test: [
+    {
+      menu: 'shareMapper',
+      path: '/shareMapper',
+      name: 'shareMapper.vue',
+      component: () =>
+        import('@/views/Examples/Test/shareMapper.vue'),
+    },
     {
       menu: 'Panorama',
       path: '/Panorama',
       name: 'Panorama.vue',
       component: () =>
         import('@/views/Examples/Test/Panorama.vue'),
+    },
+  ],
+  Widgets: [
+    {
+      menu: 'Box',
+      path: '/Box',
+      name: 'Box.vue',
+      component: () =>
+        import('@/views/Examples/Widgets/Box.vue'),
     },
   ],
 }

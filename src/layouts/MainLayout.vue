@@ -14,7 +14,7 @@ import Home from '@/views/home.vue';
 import Menu from '@/components/menu/index.vue';
 
 onMounted(() => {
-  console.log('MainLayout mounted')
+  // console.log('MainLayout mounted')
 })
 </script>
 <style scoped>

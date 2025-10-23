@@ -17,21 +17,17 @@ import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor'
 import vtkConeSource from '@kitware/vtk.js/Filters/Sources/ConeSource'
 import vtkFullScreenRenderWindow from '@kitware/vtk.js/Rendering/Misc/FullScreenRenderWindow'
 import vtkMapper from '@kitware/vtk.js/Rendering/Core/Mapper'
-import vtkPolyLineWidget from '@/vtk.js/Widgets/Widgets3D/PolyLineWidget'
+// import vtkPolyLineWidget from '@kitware/vtk.js/Widgets/Widgets3D/PolyLineWidget'
+import vtkPolyLineWidget from '@kitware/vtk.js/Widgets/Widgets3D/PolyLineWidget';
 import vtkWidgetManager from '@kitware/vtk.js/Widgets/Core/WidgetManager'
 import vtkInteractorStyleManipulator from '@/vtk.js/Interaction/Style/InteractorStyleManipulator'
-import vtkInteractorObserver from '@kitware/vtk.js/Rendering/Core/InteractorObserver'
 
-import { bindSVGRepresentation } from '@/vtk.js/Utilities/SVGHelpers'
-// import controlPanel from './controlPanel.html';
-
-const { computeWorldToDisplay } = vtkInteractorObserver
 
 // ----------------------------------------------------------------------------
 // Standard rendering code setup
 // ----------------------------------------------------------------------------
 
-const containerRef = ref(null)
+const containerRef = ref()
 
 onMounted(() => {
   const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
