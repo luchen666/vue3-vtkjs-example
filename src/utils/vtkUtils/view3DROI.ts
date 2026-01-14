@@ -2,6 +2,8 @@
 import vtkColorTransferFunction from '@/vtk.js/Rendering/Core/ColorTransferFunction'
 import vtkPiecewiseFunction from '@/vtk.js/Common/DataModel/PiecewiseFunction'
 import type vtkVolume from '@/vtk.js/Rendering/Core/Volume'
+import vtkDataArray from "@kitware/vtk.js/Common/Core/DataArray";
+import type vtkActor from '@kitware/vtk.js/Rendering/Core/Actor';
 
 /**
  * 设置 牙齿、骨骼、灰度
@@ -162,3 +164,63 @@ export const setModelAction = (actor: vtkVolume, modelValue: string) => {
   property.setScalarOpacity(0, opacityTransferFunction)
   property.setInterpolationTypeToLinear()
 }
+
+
+/** 默认 scalar 设置 */
+export const setLookUpTableFn = (mapper: any) => {
+  const scalarRange = mapper.getScalarRange();
+  const level1 = (0.08 - scalarRange[0]) / (scalarRange[1] - scalarRange[0]);
+  const level2 = (0.15 - scalarRange[0]) / (scalarRange[1] - scalarRange[0]);
+
+  const colorTransferFunction = vtkColorTransferFunction.newInstance();
+  colorTransferFunction.setUseBelowRangeColor(true);
+  colorTransferFunction.setUseAboveRangeColor(true);
+  colorTransferFunction.addRGBPoint(level1, 0.867, 0.45, 0.435);
+  colorTransferFunction.addRGBPoint(level2, 0.867, 0.6, 0.6);
+  colorTransferFunction.build();
+  mapper.setLookupTable(colorTransferFunction);
+  mapper.setScalarVisibility(true);
+};
+
+
+/** 设置 scalar数据 */
+export const addScalar = (list: number[], polydata: any) => {
+  const scales = vtkDataArray.newInstance({
+    numberOfComponents: 1,
+    size: list.length,
+    dataType: "Float16Array",
+    name: "list",
+  });
+
+  for (let i = 0; i < list.length; i++) {
+    scales.setTuple(i, [list[i]]);
+  }
+  // 用于显示咬合深度数值
+  polydata.getPointData().setScalars(scales);
+};
+
+
+const propertyInfo: { [key: string]: any } = {
+  gums: {
+    ambient: 0.5,
+    diffuse: 0.5,
+    specular: 0.6,
+    specularPower: 128,
+    color: [225 / 255, 148 / 255, 149 / 255],
+  },
+  teeth: {
+    ambient: 0.52,
+    diffuse: 0.38,
+    specular: 0.6,
+    specularPower: 128,
+    color: [1, 1, 1],
+  },
+};
+export const setActorProperty = (actor: vtkActor, type: string) => {
+  const property = actor.getProperty();
+  property.setColor(propertyInfo[type].color);
+  property.setAmbient(propertyInfo[type].ambient);
+  property.setDiffuse(propertyInfo[type].diffuse);
+  property.setSpecular(propertyInfo[type].specular);
+  property.setSpecularPower(propertyInfo[type].specularPower);
+};

@@ -131,6 +131,20 @@ export const Examples = {
   ],
   Test: [
     {
+      menu: 'OralModel',
+      path: '/OralModel',
+      name: 'OralModel.vue',
+      component: () =>
+        import('@/views/Examples/Test/OralModel.vue'),
+    },
+    {
+      menu: 'DracoBase64',
+      path: '/DracoBase64',
+      name: 'DracoBase64.vue',
+      component: () =>
+        import('@/views/Examples/Test/DracoBase64.vue'),
+    },
+    {
       menu: 'shareMapper',
       path: '/shareMapper',
       name: 'shareMapper.vue',

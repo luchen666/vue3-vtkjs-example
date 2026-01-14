@@ -10,7 +10,7 @@
     </option>
   </select>
 
-  <div ref="rootContainerRef" class="renderWindowContainer"></div>
+  <div ref="rootContainerRef" class="view-container"></div>
 </template>
 
 <script lang="ts" setup>
@@ -18,9 +18,7 @@ import { ref, onMounted } from 'vue'
 import '@kitware/vtk.js/Rendering/Misc/RenderingAPIs'
 import '@kitware/vtk.js/Rendering/Profiles/Volume'
 
-import vtkColorTransferFunction from '@kitware/vtk.js/Rendering/Core/ColorTransferFunction'
 import vtkInteractorStyleTrackballCamera from '@kitware/vtk.js/Interaction/Style/InteractorStyleTrackballCamera'
-import vtkPiecewiseFunction from '@kitware/vtk.js/Common/DataModel/PiecewiseFunction'
 import vtkRenderer from '@kitware/vtk.js/Rendering/Core/Renderer'
 import vtkRenderWindow from '@kitware/vtk.js/Rendering/Core/RenderWindow'
 import vtkRenderWindowInteractor from '@kitware/vtk.js/Rendering/Core/RenderWindowInteractor'
@@ -83,54 +81,52 @@ function applyStyle(element: HTMLElement) {
   return element
 }
 
-
-  const childRenderWindows: any[] = []
-  function addRenderWindow(actor: any) {
-    if (mainRenderWindow.isDeleted()) {
-      resetMainRenderWindowAndView()
-    }
-    const renderWindow = vtkRenderWindow.newInstance()
-    mainRenderWindow.addRenderWindow(renderWindow)
-
-    const renderWindowView = mainRenderWindowView.addMissingNode(renderWindow)
-    renderWindow.addView(renderWindowView)
-
-    const container = applyStyle(document.createElement('div'))
-    rootContainerRef.value.appendChild(container)
-    renderWindowView.setContainer(container)
-
-    const containerBounds = container.getBoundingClientRect()
-    const pixRatio = window.devicePixelRatio
-    const dimensions = [
-      containerBounds.width * pixRatio,
-      containerBounds.height * pixRatio,
-    ]
-    renderWindowView.setSize(...dimensions)
-    const canvas = renderWindowView.getCanvas()
-    canvas.style.width = `${container.clientWidth}px`
-    canvas.style.height = `${container.clientHeight}px`
-
-    // Add an interactor to the view
-    const interactor = vtkRenderWindowInteractor.newInstance()
-    interactor.setView(renderWindowView)
-    interactor.initialize()
-    interactor.bindEvents(canvas)
-    interactor.setInteractorStyle(
-      vtkInteractorStyleTrackballCamera.newInstance(),
-    )
-
-    const renderer = vtkRenderer.newInstance({ background: [0, 0, 0] })
-    renderWindow.addRenderer(renderer)
-
-    renderer.addActor(actor)
-    renderer.resetCamera()
-
-    childRenderWindows.push(renderWindow)
-
-    return renderWindow
+let childRenderWindows: any[] = []
+function addRenderWindow(actor: any) {
+  if (mainRenderWindow.isDeleted()) {
+    resetMainRenderWindowAndView()
   }
+  const renderWindow = vtkRenderWindow.newInstance()
+  mainRenderWindow.addRenderWindow(renderWindow)
 
-  const imageData = getImageData2(buffer3D)
+  const renderWindowView = mainRenderWindowView.addMissingNode(renderWindow)
+  renderWindow.addView(renderWindowView)
+
+  const container = applyStyle(document.createElement('div'))
+  rootContainerRef.value.appendChild(container)
+  renderWindowView.setContainer(container)
+
+  const containerBounds = container.getBoundingClientRect()
+  const pixRatio = window.devicePixelRatio
+  const dimensions = [
+    containerBounds.width * pixRatio,
+    containerBounds.height * pixRatio,
+  ]
+  renderWindowView.setSize(...dimensions)
+  const canvas = renderWindowView.getCanvas()
+  canvas.style.width = `${container.clientWidth}px`
+  canvas.style.height = `${container.clientHeight}px`
+
+  // Add an interactor to the view
+  const interactor = vtkRenderWindowInteractor.newInstance()
+  interactor.setView(renderWindowView)
+  interactor.initialize()
+  interactor.bindEvents(canvas)
+  // interactor.setContainer(container)
+  interactor.setInteractorStyle(vtkInteractorStyleTrackballCamera.newInstance())
+
+  const renderer = vtkRenderer.newInstance({ background: [0, 0, 0] })
+  renderWindow.addRenderer(renderer)
+
+  renderer.addActor(actor)
+  renderer.resetCamera()
+
+  childRenderWindows.push(renderWindow)
+
+  return renderWindow
+}
+
+const imageData = getImageData2(buffer3D)
 const addWindow = () => {
   for (let i = 0; i < windowSize.value[0] * windowSize.value[1]; i++) {
     addRenderWindow(createImageActor(imageData))
@@ -138,25 +134,24 @@ const addWindow = () => {
 }
 
 const removeWindow = () => {
-  console.log(childRenderWindows,  ' childRenderWindows')
-  console.log( mainRenderWindow,' mainRenderWindow.getView()')
+  childRenderWindows.forEach(renderWindow => {
+    const view = renderWindow.getViews()[0]
+    const container = view.getContainer()
+    rootContainerRef.value.removeChild(container)
 
-  const renderWindowView = mainRenderWindow.getViews()[0]
-  childRenderWindows.forEach((renderWindow) => {
-    const container = renderWindowView.getContainer();
-      rootContainerRef.value.removeChild(container)
-      renderWindowView.getInteractor().delete()
+    renderWindow?.getInteractor()?.delete()
 
-      mainRenderWindow.removeRenderWindow(renderWindow)
-      renderWindow.delete()
+    mainRenderWindow.removeRenderWindow(renderWindow)
+    renderWindow?.delete()
 
-      mainRenderWindowView.removeNode(renderWindowView)
+    mainRenderWindowView.removeNode(view)
 
-      if (mainRenderWindow.getChildRenderWindowsByReference().length === 0) {
-        mainRenderWindowView.delete()
-        mainRenderWindow.delete()
-      }
+    if (mainRenderWindow.getChildRenderWindowsByReference().length === 0) {
+      mainRenderWindowView.delete()
+      mainRenderWindow.delete()
+    }
   })
+  childRenderWindows = []
 }
 
 const windowSize = ref([1, 5])
@@ -176,18 +171,20 @@ const optionList = [
 ]
 
 const changeSize = () => {
-  removeWindow();
-  // addWindow()
+  removeWindow()
+  addWindow()
+  mainRenderWindowView.resizeFromChildRenderWindows()
+  mainRenderWindow.render()
 }
 
 onMounted(() => {
-  addWindow();
+  addWindow()
   mainRenderWindowView.resizeFromChildRenderWindows()
   mainRenderWindow.render()
 })
 </script>
 <style>
-.renderWindowContainer {
+.view-container {
   width: 100%;
   height: 100%;
   display: flex;

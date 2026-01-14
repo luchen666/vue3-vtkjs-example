@@ -20,12 +20,12 @@ type MenuType = {
 }
 
 export const menuList: MenuType = {
+  Examples,
   Snabbdom,
   VtkVsThree,
   Filters,
   IO,
   Rendering,
-  Examples,
   Interaction,
   Widgets
 }
