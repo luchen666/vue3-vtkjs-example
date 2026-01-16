@@ -1,10 +1,9 @@
 <template>
-  <div ref="containerRef" style="width: 100%; height: 100%"></div>
-  <div id="readerDom" style="position: absolute;top: 0; right: 0;color: #fff;"></div>
+  <div ref="containerRef" id="mainId"></div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import '@/vtk.js/Rendering/Profiles/Geometry';
 
 import vtkActor from '@/vtk.js/Rendering/Core/Actor';
@@ -14,10 +13,12 @@ import vtkPLYReader from '@/vtk.js/IO/Geometry/PLYReader';
 import vtkTexture from '@/vtk.js/Rendering/Core/Texture';
 import type vtkRenderer from "@/vtk.js/Rendering/Core/Renderer";
 import type vtkRenderWindow from "@/vtk.js/Rendering/Core/RenderWindow";
+import { FPSMonitor } from '@/utils/FPSMonitor';
 
 const containerRef = ref();
 let renderer: vtkRenderer;
 let renderWindow: vtkRenderWindow;
+let fpsMonitor: FPSMonitor | null = null;
 
 console.time('vtk');
 
@@ -46,6 +47,18 @@ const setActorProperty = (actor: vtkActor) => {
   property.setSpecularPower(600);
 }
 
+const handleImgFile = (url: string, actor: vtkActor) => {
+  const image = new Image();
+  image.src = url;
+  const texture = vtkTexture.newInstance();
+  texture.setInterpolate(true);
+  texture.setEdgeClamp(true);
+  texture.setImage(image);
+  actor.addTexture(texture);
+  // renderer.resetCamera();
+  // renderWindow.render();
+}
+
 onMounted(async () => {
   const fullScreenRenderer = vtkFullScreenRenderWindow.newInstance({
     container: containerRef.value,
@@ -67,24 +80,61 @@ onMounted(async () => {
   mapper2.setInputConnection(reader2.getOutputPort());
   renderer.addActor(actor2);
 
-  const baseUrl = "/data/ply_png/ply5";
+  const baseUrl = "/data/ply_png/ply2";
+  const url = baseUrl + "/upperJaw.png";
+  handleImgFile(url, actor1);
+
+  const url2 = baseUrl + "/lowerJaw.png";
+  handleImgFile(url2, actor2);
+
   await reader1.setUrl(`${baseUrl}/upperJaw.ply`, { binary: true })
   setActorProperty(actor1);
-  // await setImgTexture(actor1, `${baseUrl}/upperJaw.png`);
-  let cellColor = reader1.getOutputData().getPointData().getScalars()?.getData() || [];
-  console.log(cellColor, 'cellColor ply');
   mapper1.modified();
   actor1.modified();
 
-
   await reader2.setUrl(`${baseUrl}/lowerJaw.ply`, { binary: true })
   setActorProperty(actor2);
-  // await setImgTexture(actor2, `${baseUrl}/lowerJaw.png`);
 
   renderer.resetCamera();
   renderWindow.render();
   console.timeEnd('vtk');
+  
+  // 初始化 FPS 监控
+  fpsMonitor = new FPSMonitor({
+    updateInterval: 500,
+    showElement: true,
+    position: 'top-right',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    textColor: '#00ff00',
+    fontSize: '14px',
+    padding: '10px',
+    borderRadius: '5px'
+  });
+  fpsMonitor.start();
+  
+  // // 监听渲染事件来更新 FPS
+  // renderWindow.onRender(() => {
+  //   if (fpsMonitor) {
+  //     fpsMonitor.update();
+  //   }
+  // });
+  
+  // 启用交互模式以持续渲染
+  renderWindow.getInteractor().start();
+});
+
+onUnmounted(() => {
+  if (fpsMonitor) {
+    fpsMonitor.destroy();
+    fpsMonitor = null;
+  }
 });
 
 </script>
-<style scoped></style>
+<style scoped lang='less'>
+#mainId {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+}
+</style>

@@ -7,8 +7,10 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { FPSMonitor } from '@/utils/FPSMonitor';
 
 let camera: any, scene: any, renderer: any;
+let fpsMonitor: FPSMonitor | null = null;
 
 console.time('three');
 
@@ -85,23 +87,47 @@ async function init() {
   // 渲染
   animate();
   console.timeEnd('three');
+  
+  // 初始化 FPS 监控
+  fpsMonitor = new FPSMonitor({
+    updateInterval: 500,
+    showElement: true,
+    position: 'top-right',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    textColor: '#00ff00',
+    fontSize: '14px',
+    padding: '10px',
+    borderRadius: '5px'
+  });
+  fpsMonitor.start();
 }
 
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
+
+  // 更新 FPS 监控
+  if (fpsMonitor) {
+    fpsMonitor.update();
+  }
 }
 
 onMounted(() => {
   init();
 })
 
-onUnmounted(() => { })
+
+onUnmounted(() => {
+  if (fpsMonitor) {
+    fpsMonitor.destroy();
+    fpsMonitor = null;
+  }
+})
 
 </script>
 
 <style scoped lang='less'>
 #mainId {
-  height: 100%;
+  height: 800px;
 }
 </style>
